@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Lighthouse Report Extractor</title>
+</head>
+
+<body>
+  <textarea id="input" style="width:800px;height:500px">paste full JSON here</textarea>
+  <br>
+  <button onclick="extractLighthouseReport()">Click to get lighthouseReport</button>
+  <br>
+  <br>
+  LightouseResult value only:
+  <br>
+  <textarea id="output"></textarea>
+  <br>
+  <button onclick="copyToClipboard()">Copy to clipboard</button>
+  <br>
+  <br>
+  Go to <a href="https://googlechrome.github.io/lighthouse/viewer/" target="_blank">Lighthouse Viewer</a> and paste it in!
+  <script>
+  function extractLighthouseReport() {
+    const jsonString = document.getElementById("input").value;
+    const jsonObj = JSON.parse(jsonString);
+    if (jsonObj && jsonObj["lighthouseResult"]) {
+      const lighthouseResultObj = jsonObj["lighthouseResult"];
+      const outputString = JSON.stringify(lighthouseResultObj)
+      document.getElementById('output').innerHTML=outputString;
+      console.log(outputString)
+      console.log(lighthouseResultObj)
+    }
+  }
+  function copyToClipboard() {
+    /* Get the text field */
+    var copyText = document.getElementById("output");
+
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+    /* Copy the text inside the text field */
+    document.execCommand("copy");
+  }
+  </script>
+</body>
+</html>
